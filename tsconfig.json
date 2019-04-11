@@ -4,6 +4,7 @@
         "module": "commonjs",
         "esModuleInterop": true,
         "strict": true,
+        "jsx": "react",
         "noImplicitAny": true,
         "removeComments": true,
         "preserveConstEnums": true,
