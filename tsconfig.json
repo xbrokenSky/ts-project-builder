@@ -3,6 +3,9 @@
         "target": "es5",
         "module": "commonjs",
         "esModuleInterop": true,
+        "isolatedModules": true,
+        "moduleResolution": "node",
+        "allowSyntheticDefaultImports": true,
         "strict": true,
         "jsx": "react",
         "allowJs": true,
@@ -11,7 +14,9 @@
         "noImplicitAny": true,
         "removeComments": true,
         "preserveConstEnums": true,
-        "sourceMap": true
+        "sourceMap": true,
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true
     },
     "include": [
         "src/**/*"
