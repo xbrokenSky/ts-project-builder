@@ -20,7 +20,7 @@ const config = {
     output: {
         path: path.resolve(__dirname, './dist'),
         filename: './scripts/index.js',
-        publicPath: '/',
+        publicPath: '/dist',
     },
     devServer: {
         overlay: true,
