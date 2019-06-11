@@ -73,6 +73,7 @@
         "react/jsx-filename-extension": ["off"],
         "react/jsx-indent": [2, 4],
         "react/prefer-stateless-function": [0, {"ignorePureComponents": true}],
+        "react/prop-types": [1, { "skipUndeclared": true}],
         "react/jsx-one-expression-per-line": [0, {"allow": "single-child"}],
         "react/destructuring-assignment": [0, "always", {"ignoreClassFields": false}],
         "react/forbid-prop-types": [1, { "forbid": ["any"], "checkContextTypes": true, "checkChildContextTypes": true}],
