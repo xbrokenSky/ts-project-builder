@@ -1,13 +1,13 @@
 module.exports = {
     roots: [
-        "<rootDir>/src"
+        "<rootDir>/__tests__"
     ],
-    transform: {
-        "^.+\\.tsx?$": "ts-jest"
-    },
+    // transform: {
+    //     "^.+\\.tsx?$": "ts-jest"
+    // },
     setupFiles: [
         '<rootDir>/__tests__/global.js',
-        '<rootDir>setupTests.js',
+        '<rootDir>/setupTests.js',
     ],
     testRegex: "(/__tests__/.*|(\\.|/)(test|spec))\\.tsx?$",
     moduleFileExtensions: [
