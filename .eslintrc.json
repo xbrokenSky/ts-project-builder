@@ -11,7 +11,8 @@
     "plugins": [
         "react",
         "@typescript-eslint",
-        "import"
+        "import",
+        "react-hooks"
     ],
     "settings": {
         "react": {
@@ -79,6 +80,8 @@
         "react/forbid-prop-types": [1, { "forbid": ["any"], "checkContextTypes": true, "checkChildContextTypes": true}],
         "react/jsx-indent-props": [1, 4],
         "react/no-multi-comp": [0, { "ignoreStateless": true }],
+        "react-hooks/rules-of-hooks": "error",
+        "react-hooks/exhaustive-deps": "warn",
         "jsx-a11y/interactive-supports-focus": [0],
         "jsx-a11y/click-events-have-key-events": [0]
     },
