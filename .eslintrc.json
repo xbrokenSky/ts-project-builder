@@ -48,7 +48,7 @@
         ],
         "@typescript-eslint/no-unused-vars": ["warn", { "args": "after-used" }],
         "no-multi-assign": [1],
-        "indent": ["warn", 4, { "SwitchCase": 1 }],
+        "indent": ["off", 4, { "SwitchCase": 1 }],
         "quotes": ["warn", "single", { "avoidEscape": true, "allowTemplateLiterals": true }],
         "jsx-quotes": ["warn", "prefer-single"],
         "comma-dangle": ["warn", "always-multiline"],
@@ -58,7 +58,7 @@
         "arrow-body-style": ["warn", "as-needed", { "requireReturnForObjectLiteral": true }],
         "arrow-parens": [1, "always"],
         "object-curly-newline": [
-            "warn",
+            "off",
             {
                 "ObjectExpression": { "multiline": true, "minProperties": 1 },
                 "ObjectPattern": { "multiline": true, "minProperties": 5 },

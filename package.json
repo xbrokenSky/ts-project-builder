@@ -7,7 +7,7 @@
         "test": "jest --coverage",
         "build": "webpack --mode production --optimize-minimize",
         "dev": "webpack-dev-server --mode development --open",
-        "prettier": "prettier --write src/scripts/**/*.tsx?$",
+        "prettier": "prettier --write src/scripts/",
         "eslint-debug": "eslint --debug src/scripts/",
         "eslint-fix": "eslint --debug src/scripts/ --fix"
     },
