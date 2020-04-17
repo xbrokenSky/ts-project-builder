@@ -53,7 +53,7 @@
         "jsx-quotes": ["warn", "prefer-single"],
         "comma-dangle": ["warn", "always-multiline"],
         "max-len": [1, 120, 2, { "ignoreComments": true }],
-        "linebreak-style": ["warn", "windows"],
+        "linebreak-style": ["off", "windows"],
         "object-curly-spacing": ["warn", "always"],
         "arrow-body-style": ["warn", "as-needed", { "requireReturnForObjectLiteral": true }],
         "arrow-parens": [1, "always"],
@@ -85,7 +85,8 @@
         "react-hooks/rules-of-hooks": "error",
         "react-hooks/exhaustive-deps": "warn",
         "jsx-a11y/interactive-supports-focus": [0],
-        "jsx-a11y/click-events-have-key-events": [0]
+        "jsx-a11y/click-events-have-key-events": [0],
+        "implicit-arrow-linebreak": [0]
     },
     "extends": ["airbnb", "plugin:@typescript-eslint/recommended"]
 }
