@@ -86,7 +86,7 @@
         "react-hooks/exhaustive-deps": "warn",
         "jsx-a11y/interactive-supports-focus": [0],
         "jsx-a11y/click-events-have-key-events": [0],
-        "implicit-arrow-linebreak": [0]
+        "implicit-arrow-linebreak": ["off"]
     },
     "extends": ["airbnb", "plugin:@typescript-eslint/recommended"]
 }
