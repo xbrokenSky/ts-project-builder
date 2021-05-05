@@ -1,4 +1,3 @@
-/* eslint no-unused-vars: ['warn'] */
 // const webpack = require('webpack');
 const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
@@ -28,6 +27,7 @@ const config = {
         overlay: true,
         historyApiFallback: { disableDotRule: true },
         contentBase: './dist',
+        hot: true,
     },
     module: {
         // sideEffects: [
