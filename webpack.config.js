@@ -11,8 +11,10 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const WriteFilePlugin = require('write-file-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+const ESLintPlugin = require('eslint-webpack-plugin');
 
 const devMode = process.env.NODE_ENV !== 'production';
+
 const config = {
     // entry: ['./src/scripts/index.js'],
     // entry: ['./src/scripts/index.js', './src/styles/styles.scss'],
@@ -24,7 +26,7 @@ const config = {
     },
     devServer: {
         overlay: true,
-        historyApiFallback: {disableDotRule: true},
+        historyApiFallback: { disableDotRule: true },
         contentBase: './dist',
     },
     module: {
@@ -36,19 +38,12 @@ const config = {
             {
                 test: /\.jsx?$/,
                 include: path.resolve(__dirname, 'src/scripts'),
-                use: [
-                    {loader: 'babel-loader'},
-                    {loader: 'eslint-loader'},
-                    {loader: 'astroturf/loader'},
-                ],
+                use: [{ loader: 'babel-loader' }, { loader: 'astroturf/loader' }],
                 exclude: '/node_modules/',
             },
             {
                 test: /\.tsx?$/,
-                use: [
-                    {loader: 'ts-loader', options: {transpileOnly: true}},
-                    {loader: 'astroturf/loader'},
-                ],
+                use: [{ loader: 'ts-loader', options: { transpileOnly: true } }, { loader: 'astroturf/loader' }],
                 exclude: '/node_modules/',
             },
             {
@@ -58,9 +53,9 @@ const config = {
                 use: [
                     // {loader: 'style-loader'},
                     MiniCssExtractPlugin.loader,
-                    {loader: 'css-loader', options: {url: false, importLoaders: 2}},
-                    {loader: 'postcss-loader'},
-                    {loader: 'sass-loader'},
+                    { loader: 'css-loader', options: { url: false, importLoaders: 2 } },
+                    { loader: 'postcss-loader' },
+                    { loader: 'sass-loader' },
                 ],
                 exclude: '/node_modules/',
             },
@@ -84,15 +79,13 @@ const config = {
             {
                 test: /\.(jpg|jpeg|png|gif)$/i,
                 include: path.resolve(__dirname, 'src/scripts/components'),
-                use: [
-                    {loader: 'url-loader', options: {limit: 25000}},
-                ],
+                use: [{ loader: 'url-loader', options: { limit: 25000 } }],
                 exclude: '/node_modules/',
             },
         ],
     },
     resolve: {
-        extensions: [".ts", ".tsx", ".js", ".jsx", ".json"],
+        extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
     },
     plugins: [
         // new ExtractTextPlugin({filename: 'styles.css', disable: false, allChunks: true}),
@@ -106,27 +99,31 @@ const config = {
             template: './src/index.html',
             filename: 'index.html',
         }),
-        new CopyWebpackPlugin([
-            {
-                // context: path.resolve(__dirname, ''),
-                from: './src/fonts',
-                to: './fonts',
-            },
-            {
-                from: './src/favicon',
-                to: './favicon',
-            },
-            {
-                from: './src/images',
-                to: './images',
-            },
-            {
-                from: './src/assets',
-                to: './assets',
-            },
-        ], {copyUnmodified: false}),
+        new CopyWebpackPlugin(
+            [
+                {
+                    // context: path.resolve(__dirname, ''),
+                    from: './src/fonts',
+                    to: './fonts',
+                },
+                {
+                    from: './src/favicon',
+                    to: './favicon',
+                },
+                {
+                    from: './src/images',
+                    to: './images',
+                },
+                {
+                    from: './src/assets',
+                    to: './assets',
+                },
+            ],
+            { copyUnmodified: false },
+        ),
         new WriteFilePlugin(),
-        new ForkTsCheckerWebpackPlugin({async: false}),
+        new ForkTsCheckerWebpackPlugin({ async: false }),
+        new ESLintPlugin(),
         // new WebpackMd5Hash(),
         // new CleanWebpackPlugin('dist',{}),
     ],
