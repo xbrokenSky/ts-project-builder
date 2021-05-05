@@ -27,7 +27,7 @@ const config = {
         overlay: true,
         historyApiFallback: { disableDotRule: true },
         contentBase: './dist',
-        hot: true,
+        // hot: true,
     },
     module: {
         // sideEffects: [
