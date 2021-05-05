@@ -50,7 +50,7 @@
         "no-multi-assign": [1],
         "indent": ["off", 4, { "SwitchCase": 1 }],
         "quotes": ["warn", "single", { "avoidEscape": true, "allowTemplateLiterals": true }],
-        "jsx-quotes": ["warn", "prefer-single"],
+        "jsx-quotes": ["warn", "prefer-double"],
         "comma-dangle": ["warn", "always-multiline"],
         "max-len": [1, 120, 2, { "ignoreComments": true }],
         "linebreak-style": ["off", "windows"],

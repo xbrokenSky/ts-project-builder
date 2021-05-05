@@ -7,6 +7,6 @@ module.exports = {
     jsxBracketSameLine: false,
     tabWidth: 4,
     arrowParens: 'always',
-    jsxSingleQuote: true,
+    jsxSingleQuote: false,
     endOfLine: 'crlf',
 };
