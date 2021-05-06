@@ -68,7 +68,7 @@
         ],
         "class-methods-use-this": [0],
         "no-underscore-dangle": ["error", { "allowAfterThis": true, "allowAfterSuper": true }],
-        "import/extensions": [ "ignorePackages", {
+        "import/extensions": [ 2, "ignorePackages", {
                 "js": "never",
                 "jsx": "never",
                 "ts": "never",
