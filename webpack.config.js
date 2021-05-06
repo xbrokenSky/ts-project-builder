@@ -27,7 +27,7 @@ const config = {
         overlay: true,
         historyApiFallback: { disableDotRule: true },
         contentBase: './dist',
-        // hot: true,
+        hot: true,
     },
     module: {
         // sideEffects: [
@@ -58,23 +58,6 @@ const config = {
                     { loader: 'sass-loader' },
                 ],
                 exclude: '/node_modules/',
-            },
-            {
-                // test: /\.(sa|sc|c)ss$/,
-                // exclude: '/node_modules/',
-                // use: [
-                //     {loader: 'style-loader'},
-                //     {loader: 'css-loader'},
-                //     {loader: 'sass-loader'}
-                // ],
-                // use: ExtractTextPlugin.extract({
-                //     fallback: "style-loader",
-                //     use: [
-                //         {loader: 'css-loader'},
-                //         {loader: 'postcss-loader'},
-                //         {loader: 'sass-loader'}
-                //     ]
-                // })
             },
             {
                 test: /\.(jpg|jpeg|png|gif)$/i,
@@ -123,7 +106,9 @@ const config = {
         ),
         new WriteFilePlugin(),
         new ForkTsCheckerWebpackPlugin({ async: false }),
-        new ESLintPlugin(),
+        new ESLintPlugin({
+            extensions: ['js', 'jsx', 'ts', 'tsx'],
+        }),
         // new WebpackMd5Hash(),
         // new CleanWebpackPlugin('dist',{}),
     ],
