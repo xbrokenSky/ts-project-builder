@@ -1,33 +1,33 @@
 // const webpack = require('webpack');
 const path = require('path');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackMd5Hash = require('webpack-md5-hash');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const WriteFilePlugin = require('write-file-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
 
 const devMode = process.env.NODE_ENV !== 'production';
 
 const config = {
-    // entry: ['./src/scripts/index.js'],
-    // entry: ['./src/scripts/index.js', './src/styles/styles.scss'],
     entry: ['./src/scripts/index.ts', './src/styles/styles.scss'],
+    target: ['web', 'es5'],
     output: {
         path: path.resolve(__dirname, './dist'),
         filename: './scripts/index.js',
         publicPath: '/',
     },
     devServer: {
-        overlay: true,
-        historyApiFallback: { disableDotRule: true },
-        contentBase: './dist',
+        historyApiFallback: true,
         hot: true,
+        compress: true,
+        client: {
+            overlay: {
+                stats: 'errors-only',
+            },
+        },
+        watchFiles: path.resolve(__dirname, './src/index.html'),
     },
     module: {
         // sideEffects: [
@@ -48,8 +48,8 @@ const config = {
             },
             {
                 test: /\.(sa|sc|c)ss$/,
-                // include: path.resolve(__dirname, 'src'),
-                include: path.resolve(__dirname, 'src/styles'),
+                include: path.resolve(__dirname, 'src'),
+                // include: path.resolve(__dirname, 'src/styles'),
                 use: [
                     // {loader: 'style-loader'},
                     MiniCssExtractPlugin.loader,
@@ -71,7 +71,6 @@ const config = {
         extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
     },
     plugins: [
-        // new ExtractTextPlugin({filename: 'styles.css', disable: false, allChunks: true}),
         new MiniCssExtractPlugin({
             filename: './styles/styles.css',
             // chunkFilename: devMode ? '[id].css' : '[id].[hash].css',
@@ -83,38 +82,37 @@ const config = {
             filename: 'index.html',
         }),
         new CopyWebpackPlugin(
-            [
-                {
-                    // context: path.resolve(__dirname, ''),
-                    from: './src/fonts',
-                    to: './fonts',
-                },
-                {
-                    from: './src/favicon',
-                    to: './favicon',
-                },
-                {
-                    from: './src/images',
-                    to: './images',
-                },
-                {
-                    from: './src/assets',
-                    to: './assets',
-                },
-            ],
-            { copyUnmodified: false },
+            {
+                patterns: [
+                    {
+                        from: './src/fonts',
+                        to: './fonts',
+                    },
+                    {
+                        from: './src/favicon',
+                        to: './favicon',
+                    },
+                    {
+                        from: './src/images',
+                        to: './images',
+                    },
+                    {
+                        from: './src/assets',
+                        to: './assets',
+                    },
+                ],
+                options: { concurrency: 100 },
+            }
         ),
-        new WriteFilePlugin(),
         new ForkTsCheckerWebpackPlugin({ async: false }),
         new ESLintPlugin({
             extensions: ['js', 'jsx', 'ts', 'tsx'],
         }),
         // new WebpackMd5Hash(),
-        // new CleanWebpackPlugin('dist',{}),
     ],
-    stats: {
-        warningsFilter: /export .* was not found in/,
-    },
+    // stats: {
+    //     warningsFilter: /export .* was not found in/,
+    // },
     // optimization: {
     //     minimizer: [
     //         new UglifyJsPlugin({
@@ -131,9 +129,9 @@ const config = {
 module.exports = (env, option) => {
     if (option.mode === 'production') {
         config.devtool = 'source-map';
-        config.plugins.push(new CleanWebpackPlugin('dist', {}));
+        config.plugins.push(new CleanWebpackPlugin());
     } else {
-        config.devtool = 'eval-sourcemap';
+        config.devtool = 'eval-source-map';
     }
     // config.devtool = (option.mode === 'production') ? 'source-map' : 'eval-sourcemap';
     return config;
