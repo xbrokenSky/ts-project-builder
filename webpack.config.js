@@ -1,4 +1,4 @@
-// const webpack = require('webpack');
+const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackMd5Hash = require('webpack-md5-hash');
@@ -8,13 +8,13 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
 
-const devMode = process.env.NODE_ENV !== 'production';
+const isDevelopment = process.env.NODE_ENV !== 'production';
 
 const config = {
     entry: ['./src/scripts/index.ts', './src/styles/styles.scss'],
     target: ['web', 'es5'],
     output: {
-        path: path.resolve(__dirname, './dist'),
+        path: path.resolve(__dirname, 'dist'),
         filename: './scripts/index.js',
         publicPath: '/',
     },
@@ -24,10 +24,10 @@ const config = {
         compress: true,
         client: {
             overlay: {
-                stats: 'errors-only',
+                errors: true,
             },
         },
-        watchFiles: path.resolve(__dirname, './src/index.html'),
+        watchFiles: path.resolve(__dirname, 'src/index.html'),
     },
     module: {
         // sideEffects: [
@@ -123,7 +123,6 @@ const config = {
     //         new OptimizeCSSAssetsPlugin({}),
     //     ],
     // },
-    // devtool: 'eval-sourcemap',
 };
 
 module.exports = (env, option) => {
@@ -132,7 +131,8 @@ module.exports = (env, option) => {
         config.plugins.push(new CleanWebpackPlugin());
     } else {
         config.devtool = 'eval-source-map';
+        config.plugins.push(new webpack.HotModuleReplacementPlugin());
     }
-    // config.devtool = (option.mode === 'production') ? 'source-map' : 'eval-sourcemap';
+
     return config;
 };

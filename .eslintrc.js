@@ -94,6 +94,8 @@ module.exports = {
         'jsx-a11y/interactive-supports-focus': [0],
         'jsx-a11y/click-events-have-key-events': [0],
         'implicit-arrow-linebreak': ['off'],
+        'no-use-before-define': [0],
+        'no-shadow': [1],
     },
     extends: ['airbnb', 'plugin:@typescript-eslint/recommended'],
 };

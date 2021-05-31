@@ -25,6 +25,7 @@
     ],
     "devDependencies": {
         "@babel/core": "^7.14.0",
+        "@babel/eslint-parser": "^7.14.4",
         "@babel/plugin-proposal-class-properties": "^7.13.0",
         "@babel/preset-env": "^7.14.1",
         "@babel/preset-react": "^7.13.13",
@@ -44,7 +45,6 @@
         "astroturf": "^1.0.0-beta.21",
         "autoprefixer": "^10.2.5",
         "babel-core": "^7.0.0-bridge.0",
-        "babel-eslint": "^10.1.0",
         "babel-jest": "^24.9.0",
         "babel-loader": "^8.2.2",
         "babel-plugin-styled-components": "^1.12.0",
