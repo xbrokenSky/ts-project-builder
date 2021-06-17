@@ -8,81 +8,98 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
 
-const isDevelopment = process.env.NODE_ENV !== 'production';
+module.exports = (env, option) => {
+    const isDevelopment = option.mode !== 'production';
 
-const config = {
-    entry: ['./src/scripts/index.ts', './src/styles/styles.scss'],
-    target: ['web', 'es5'],
-    output: {
-        path: path.resolve(__dirname, 'dist'),
-        filename: './scripts/index.js',
-        publicPath: '/',
-    },
-    devServer: {
-        historyApiFallback: true,
-        hot: true,
-        compress: true,
-        client: {
-            overlay: {
-                errors: true,
-            },
+    return {
+        entry: ['./src/scripts/index.ts', './src/styles/styles.scss'],
+        target: ['web', 'es5'],
+        output: {
+            path: path.resolve(__dirname, 'dist'),
+            filename: './scripts/index.js',
+            publicPath: '/',
         },
-        watchFiles: path.resolve(__dirname, 'src/index.html'),
-    },
-    module: {
-        // sideEffects: [
-        //     '*.css',
-        //     '*.scss',
-        // ],
-        rules: [
-            {
-                test: /\.jsx?$/,
-                include: path.resolve(__dirname, 'src/scripts'),
-                use: [{ loader: 'babel-loader' }, { loader: 'astroturf/loader' }],
-                exclude: '/node_modules/',
+        devServer: {
+            historyApiFallback: true,
+            hot: true,
+            compress: true,
+            firewall: false,
+            static: path.join(__dirname, './dist'),
+            client: {
+                overlay: {
+                    errors: true,
+                },
             },
-            {
-                test: /\.tsx?$/,
-                use: [{ loader: 'ts-loader', options: { transpileOnly: true } }, { loader: 'astroturf/loader' }],
-                exclude: '/node_modules/',
-            },
-            {
-                test: /\.(sa|sc|c)ss$/,
-                include: path.resolve(__dirname, 'src'),
-                // include: path.resolve(__dirname, 'src/styles'),
-                use: [
-                    // {loader: 'style-loader'},
-                    MiniCssExtractPlugin.loader,
-                    { loader: 'css-loader', options: { url: false, importLoaders: 2 } },
-                    { loader: 'postcss-loader' },
-                    { loader: 'sass-loader' },
-                ],
-                exclude: '/node_modules/',
-            },
-            {
-                test: /\.(jpg|jpeg|png|gif)$/i,
-                include: path.resolve(__dirname, 'src/scripts/components'),
-                use: [{ loader: 'url-loader', options: { limit: 25000 } }],
-                exclude: '/node_modules/',
-            },
-        ],
-    },
-    resolve: {
-        extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
-    },
-    plugins: [
-        new MiniCssExtractPlugin({
-            filename: './styles/styles.css',
-            // chunkFilename: devMode ? '[id].css' : '[id].[hash].css',
-        }),
-        new HtmlWebpackPlugin({
-            inject: false,
-            hash: true,
-            template: './src/index.html',
-            filename: 'index.html',
-        }),
-        new CopyWebpackPlugin(
-            {
+            watchFiles: path.resolve(__dirname, 'src/index.html'),
+        },
+        cache: {
+            type: 'filesystem',
+        },
+        module: {
+            // sideEffects: [
+            //     '*.css',
+            //     '*.scss',
+            // ],
+            rules: [
+                {
+                    test: /\.jsx?$/,
+                    include: path.resolve(__dirname, 'src/scripts'),
+                    use: [
+                        {
+                            loader: 'babel-loader',
+                            options: {
+                                cacheCompression: false,
+                                cacheDirectory: true,
+                            },
+                        },
+                    ],
+                    exclude: '/node_modules/',
+                },
+                {
+                    test: /\.tsx?$/,
+                    use: [
+                        {
+                            loader: 'ts-loader',
+                            options: {
+                                transpileOnly: true,
+                            },
+                        },
+                    ],
+                    exclude: '/node_modules/',
+                },
+                {
+                    test: /\.(sa|sc|c)ss$/,
+                    include: path.resolve(__dirname, 'src'),
+                    // include: path.resolve(__dirname, 'src/styles'),
+                    use: [
+                        // {loader: 'style-loader'},
+                        MiniCssExtractPlugin.loader,
+                        { loader: 'css-loader', options: { url: false, importLoaders: 2 } },
+                        { loader: 'postcss-loader' },
+                        { loader: 'sass-loader' },
+                    ],
+                    exclude: '/node_modules/',
+                },
+                {
+                    test: /\.(jpg|jpeg|png|gif)$/i,
+                    include: path.resolve(__dirname, 'src/scripts/components'),
+                    use: [{ loader: 'url-loader', options: { limit: 25000 } }],
+                    exclude: '/node_modules/',
+                },
+            ],
+        },
+        plugins: [
+            new MiniCssExtractPlugin({
+                filename: './styles/styles.css',
+                // chunkFilename: devMode ? '[id].css' : '[id].[hash].css',
+            }),
+            new HtmlWebpackPlugin({
+                inject: false,
+                hash: true,
+                template: './src/index.html',
+                filename: 'index.html',
+            }),
+            new CopyWebpackPlugin({
                 patterns: [
                     {
                         from: './src/fonts',
@@ -102,37 +119,30 @@ const config = {
                     },
                 ],
                 options: { concurrency: 100 },
-            }
-        ),
-        new ForkTsCheckerWebpackPlugin({ async: false }),
-        new ESLintPlugin({
-            extensions: ['js', 'jsx', 'ts', 'tsx'],
-        }),
-        // new WebpackMd5Hash(),
-    ],
-    // stats: {
-    //     warningsFilter: /export .* was not found in/,
-    // },
-    // optimization: {
-    //     minimizer: [
-    //         new UglifyJsPlugin({
-    //             cache: true,
-    //             parallel: true,
-    //             sourceMap: true // set to true if you want JS source maps
-    //         }),
-    //         new OptimizeCSSAssetsPlugin({}),
-    //     ],
-    // },
-};
-
-module.exports = (env, option) => {
-    if (option.mode === 'production') {
-        config.devtool = 'source-map';
-        config.plugins.push(new CleanWebpackPlugin());
-    } else {
-        config.devtool = 'eval-source-map';
-        config.plugins.push(new webpack.HotModuleReplacementPlugin());
-    }
-
-    return config;
+            }),
+            new ForkTsCheckerWebpackPlugin({ async: false }),
+            new ESLintPlugin({
+                extensions: ['js', 'jsx', 'ts', 'tsx'],
+                cache: true,
+                cacheLocation: './node_modules/.cache/eslint/.eslintcache',
+            }),
+            // new WebpackMd5Hash(),
+            isDevelopment && new webpack.HotModuleReplacementPlugin(),
+            !isDevelopment && new CleanWebpackPlugin(),
+        ].filter(Boolean),
+        devtool: isDevelopment ? 'eval-source-map' : 'source-map',
+        // stats: {
+        //     warningsFilter: /export .* was not found in/,
+        // },
+        // optimization: {
+        //     minimizer: [
+        //         new UglifyJsPlugin({
+        //             cache: true,
+        //             parallel: true,
+        //             sourceMap: true // set to true if you want JS source maps
+        //         }),
+        //         new OptimizeCSSAssetsPlugin({}),
+        //     ],
+        // },
+    };
 };
