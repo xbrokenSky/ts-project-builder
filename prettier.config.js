@@ -8,5 +8,5 @@ module.exports = {
     tabWidth: 4,
     arrowParens: 'always',
     jsxSingleQuote: false,
-    endOfLine: 'crlf',
+    endOfLine: 'auto',
 };

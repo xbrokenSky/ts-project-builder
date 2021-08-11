@@ -23,11 +23,12 @@ module.exports = (env, option) => {
             historyApiFallback: true,
             hot: true,
             compress: true,
-            firewall: false,
+            // firewall: false,
             static: path.join(__dirname, './dist'),
             client: {
                 overlay: {
                     errors: true,
+                    warnings: false,
                 },
             },
             watchFiles: path.resolve(__dirname, 'src/index.html'),
