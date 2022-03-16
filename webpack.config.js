@@ -75,7 +75,7 @@ module.exports = (env, option) => {
                     use: [
                         // {loader: 'style-loader'},
                         MiniCssExtractPlugin.loader,
-                        { loader: 'css-loader', options: { url: false, importLoaders: 2 } },
+                        { loader: 'css-loader', options: { url: false, importLoaders: 2, sourceMap: true } },
                         { loader: 'postcss-loader' },
                         { loader: 'sass-loader' },
                     ],
