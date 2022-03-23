@@ -3,7 +3,6 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackMd5Hash = require('webpack-md5-hash');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
@@ -18,6 +17,7 @@ module.exports = (env, option) => {
             path: path.resolve(__dirname, 'dist'),
             filename: './scripts/index.js',
             publicPath: '/',
+            clean: true,
         },
         devServer: {
             historyApiFallback: true,
@@ -129,7 +129,6 @@ module.exports = (env, option) => {
             }),
             // new WebpackMd5Hash(),
             isDevelopment && new webpack.HotModuleReplacementPlugin(),
-            !isDevelopment && new CleanWebpackPlugin(),
         ].filter(Boolean),
         devtool: isDevelopment ? 'eval-source-map' : 'source-map',
         // stats: {
