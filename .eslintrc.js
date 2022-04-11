@@ -10,7 +10,7 @@ module.exports = {
     settings: {
         react: { version: 'detect' },
         'import/parsers': { '@typescript-eslint/parser': ['.ts', '.tsx'] },
-        'import/resolver': { typescript: { alwaysTryTypes: true, project: '<root>/tsconfig.json' } },
+        'import/resolver': { typescript: { alwaysTryTypes: true, project: './tsconfig.json' } },
     },
     env: {
         browser: true,
@@ -118,6 +118,13 @@ module.exports = {
         'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
         'import/prefer-default-export': ['off'],
         'import/no-unresolved': 'error',
+        'react/function-component-definition': [
+            2,
+            {
+                namedComponents: ['function-expression', 'arrow-function'],
+                unnamedComponents: ['function-expression', 'arrow-function'],
+            },
+        ],
         'react/jsx-filename-extension': ['off'],
         'react/jsx-indent': [1, 4],
         'react/prefer-stateless-function': [0, { ignorePureComponents: true }],
